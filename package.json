@@ -1,0 +1,17 @@
+{
+  "name": "lyric-mv-opus-5.5",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Hand-painted lyric music videos in p5.js and p5.brush, made by Claude Opus 5.5: a kit, a workflow and a skill. Built on Claude Animation Base.",
+  "scripts": {
+    "sheet": "node render.mjs --sheet=0,1,2,3,4,5 --out=out/sheet.jpg",
+    "video": "node render.mjs --clip --out=out/video.mp4",
+    "new": "node scripts/new_project.mjs"
+  },
+  "dependencies": {
+    "p5": "^2.3.3",
+    "p5.brush": "^2.2.3",
+    "puppeteer-core": "^25.11.0"
+  }
+}

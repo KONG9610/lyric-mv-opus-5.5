@@ -1,0 +1,9 @@
+node_modules/
+out/
+# song projects hold other people's music and lyrics: only the example is published
+projects/*
+!projects/example/
+projects/example/out/
+# private cast packs (characters that are not yours to publish): only the README is published
+casts/*
+!casts/README.md
