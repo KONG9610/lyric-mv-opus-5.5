@@ -19,6 +19,19 @@ by Claude Opus 5.5. The song, and the two band characters in it (Cu夏 and YuH),
 as a demonstration, with credit, and are **not** part of this repository: no audio, no lyrics file and none of the
 band's character code is included. See [`demo/README.md`](demo/README.md).
 
+### A second look, and a second film
+
+[`demo/act.mp4`](demo/) is **ChiliChill乐团 / 三无Marblue《演》** (3 min 30 s), in the kit's other style: a pixel-art game
+screen where the lyrics are typed into a dialogue box and the interface tells the story. It reads the song as a language
+model's own history, from a blur of pixels to Opus 5.5.
+
+It was made the same way, with one addition that matters more than the style: **Claude directed an image model.** It
+cannot draw, so it wrote the prompts, a person ran them through an image generator, and Claude read each result, cut it
+into sprites at several resolutions and animated it in code. About twenty images, a few minutes of someone's time per
+batch, and no image-to-video model anywhere. The method is in
+[`references/image-assets.md`](skill/lyric-mv-opus-5-5/references/image-assets.md)
+([中文提示词模板](skill/lyric-mv-opus-5-5/references/image-assets.zh-CN.md)).
+
 ## What you need
 
 - [Claude Code](https://claude.com/claude-code) with Claude Opus 5.5
@@ -62,9 +75,10 @@ You choose at the start how many of those confirmations you want; "use your judg
 | [`skill/lyric-mv-opus-5-5/`](skill/lyric-mv-opus-5-5/) | The skill: the workflow (`SKILL.md`, [中文](skill/lyric-mv-opus-5-5/SKILL.zh-CN.md)) and the pitfalls list |
 | [`ANIMATION_GUIDE.md`](ANIMATION_GUIDE.md) | The craft and the engine's API (from the base kit), plus a section on lyric videos |
 | [`src/`](src/) | The engine and Clawd, and what this kit adds: `lyrics.js` (subtitles, big words, stickers), `guests.js` (a whale, Doubao, small round passers-by), `props.js`, `emotions_extra.js` |
-| [`scripts/`](scripts/) | `new_project` · `analyze_audio` (tempo, downbeat) · `font_sheet` · `cutout` (your own lettering) · `render_all` (parallel, resumable) · `rerender` (only what changed) |
-| [`templates/project/`](templates/project/) | What a new film starts from: storyboard, brief, scene skeleton |
-| [`projects/example/`](projects/example/) | A nine-second film that uses all of it |
+| [`src/pixel/`](src/pixel/) | The pixel style: `px.js` (sprites, pixel type, panels, the lyric dialogue box), `pclawd.js` (Clawd at any resolution, icons), `pguests.js` |
+| [`scripts/`](scripts/) | `new_project` (`--style=pixel`) · `analyze_audio` (tempo, downbeat) · `font_sheet` · `cutout` (your own lettering) · `pixelize` (generated art → sprites and backdrops at several resolutions) · `make_tap` (time every sung character by ear) · `render_all` (parallel, resumable) · `rerender` (only what changed) |
+| [`templates/`](templates/) | What a new film starts from, in either style: storyboard, brief, scene skeleton |
+| [`projects/example/`](projects/example/), [`projects/example-pixel/`](projects/example-pixel/) | A nine-second painted film and an eight-second pixel one |
 | [`casts/`](casts/) | Where private character packs go (ignored by git) |
 | [`assets/fonts/`](assets/fonts/) | Open-licence fonts with Chinese and Latin glyphs |
 

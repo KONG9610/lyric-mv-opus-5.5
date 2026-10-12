@@ -1,7 +1,8 @@
 // new_project.mjs: start a film. One folder for each song, so songs never share settings, frames or assets.
-//   node scripts/new_project.mjs <name> [--audio=<song file>] [--lrc=<lyrics.lrc>] [--cast=<pack>[,<pack>]]
+//   node scripts/new_project.mjs <name> [--audio=<song file>] [--lrc=<lyrics.lrc>] [--cast=<pack>[,<pack>]] [--style=pixel]
 // It makes projects/<name>/ from templates/project: studio.html, config.js, scenes/main.js, STORYBOARD.md, BRIEF.md.
 // --audio and --lrc are copied into its assets/ (the song stays out of git: projects/ is ignored).
+// --style=pixel starts from templates/project-pixel (the pixel-game look, src/pixel) instead of the painted style.
 // --cast adds the scripts of casts/<pack>/ (see casts/README.md) to its studio.html.
 // Then work inside that folder: every render and script reads ./studio.html and writes ./out.
 import { copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -13,7 +14,9 @@ const KIT = resolve(dirname(fileURLToPath(import.meta.url)), '..'), name = posit
 if (!name || /[\\/:*?"<>|]/.test(name)) { console.error('usage: new_project.mjs <name> [--audio=file] [--lrc=file] [--cast=pack]'); process.exit(1); }
 const dir = resolve(KIT, 'projects', name);
 if (existsSync(dir)) { console.error(`${dir} already exists`); process.exit(1); }
-cpSync(resolve(KIT, 'templates/project'), dir, { recursive: true });
+const tpl = resolve(KIT, args.style === 'pixel' ? 'templates/project-pixel' : 'templates/project');
+if (args.style && args.style !== 'pixel') { console.error(`unknown --style=${args.style} (the only one is pixel; leave it out for the painted style)`); process.exit(1); }
+cpSync(tpl, dir, { recursive: true });
 mkdirSync(resolve(dir, 'assets'), { recursive: true });
 const fill = f => writeFileSync(resolve(dir, f), readFileSync(resolve(dir, f), 'utf8').replaceAll('{{NAME}}', name).replaceAll('{{DATE}}', new Date().toISOString().slice(0, 10)));
 ['studio.html', 'scenes/main.js', 'STORYBOARD.md', 'BRIEF.md'].forEach(fill);

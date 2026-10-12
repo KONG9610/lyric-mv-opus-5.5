@@ -1,6 +1,6 @@
 ---
 name: lyric-mv-opus-5-5
-description: Make a hand-painted lyric music video (歌词MV / 手绘动画MV) from a song and its lyrics, with the p5.js + p5.brush kit this skill ships in. Use it whenever someone gives a song file, an .lrc or lyrics and wants a music video, lyric video, animated MV or 歌词视频 made, extended, revised or re-rendered, or asks for a new character, scene, storyboard (分镜) or a faster render for one. It covers the whole job in order: measure the tempo, read the lyrics, agree the cast (Clawd by default), storyboard, character sheets, fonts, stills, a parallel render sized to the machine, and re-rendering only what changed. Written for and tested with Claude Opus 5.5; other models are not recommended yet. 中文说明见同目录 SKILL.zh-CN.md。
+description: Make a lyric music video (歌词MV / 手绘动画MV / 像素风MV) from a song and its lyrics with the kit this skill ships in, in either of two looks: hand-painted (p5.js + p5.brush) or a pixel-art game screen. It also covers directing an image model for character and background art (写提示词、切图), when the person can run one. Use it whenever someone gives a song file, an .lrc or lyrics and wants a music video, lyric video, animated MV or 歌词视频 made, extended, revised or re-rendered, or asks for a new character, scene, storyboard (分镜) or a faster render for one. It covers the whole job in order: measure the tempo, read the lyrics, agree the cast (Clawd by default), storyboard, character sheets, fonts, stills, a parallel render sized to the machine, and re-rendering only what changed. Written for and tested with Claude Opus 5.5; other models are not recommended yet. 中文说明见同目录 SKILL.zh-CN.md。
 ---
 
 # Lyric MV (hand-painted, for Claude Opus 5.5)
@@ -28,10 +28,25 @@ revisions on a real film.
 
 - You cannot hear the song. Tempo and beat positions are measured by a script; where a word falls inside a line is an
   estimate. They will be asked to check a short list of timings by ear.
-- You cannot generate images. Every character is drawn in code from a description or a reference picture, so it will
-  be like the reference, not identical, and they will see a model sheet before it is used.
+- You cannot generate images yourself, but you can direct a model that does. By default every character is drawn in
+  code from a description or a reference picture (like the reference, not identical). If they can run an image
+  generator, or let you call one, you write the prompts, they generate, and you cut the results into sprites and
+  backdrops: a few minutes of their time buys art you could not draw. Ask which it will be.
+  `references/image-assets.md` is how.
 - The kit's own rule is "no text on screen". A lyric video overrides it on purpose: lyrics are text. Say so once, so
   the choice is theirs.
+
+## Two looks, and one collaborator
+
+- **Painted** (the default): p5.brush washes and boiling ink, everything drawn in code. `ANIMATION_GUIDE.md`.
+- **Pixel game screen**: lyrics typed into a dialogue box, sprites, an interface that tells the story; plain canvas, a
+  frame in milliseconds, so a whole song renders in a couple of minutes. `node scripts/new_project.mjs <name>
+  --style=pixel`, and read `references/pixel-style.md` before building in it.
+
+Either look can take art from an image model. When the film needs a character that acts, a place it keeps returning
+to, or a key picture, do not make do with rectangles: say what you need, write the prompts, and let the person (or a
+generator you are allowed to call) make it. Read `references/image-assets.md` first; the method in it (one standard
+picture, a line-up, then sheets of six) is what keeps a character the same from image to image.
 
 ## How much to confirm
 
@@ -93,6 +108,9 @@ Default lead: Clawd. Ask who else is in it and what they are to each other; let 
   `emotions()` and `turn()` drive it, and render a model sheet: its views, a row of emotions, and **everyone together
   at their working sizes**. `src/guests.js` is the pattern for a simple character; a cast pack's code is the pattern
   for a full one with five views.
+- With an image model in the loop, a new character is a batch of prompts instead: a standard picture, a line-up with
+  the rest of the cast, a sheet of expressions, a sheet of poses (`references/image-assets.md`). The model sheet the
+  person approves is then the generated art itself, cut up and shown at working size.
 - Real brands' mascots and real people's likenesses are the person's call and responsibility; say so plainly, once.
 
 ### 4. Storyboard (gate 1)
@@ -180,6 +198,10 @@ until the frame count and the duration match the song.
 ## Reference
 
 - `references/pitfalls.md`: the specific failures, with their causes and fixes. Read it once before starting.
+- `references/image-assets.md`: working with an image model (who does what, the prompts, reading results,
+  `scripts/pixelize.mjs`). `references/image-assets.zh-CN.md` is the prompt template to hand to a Chinese-speaking person.
+- `references/pixel-style.md`: the pixel look, its engine and what the first film in it learned.
 - In the kit: `ANIMATION_GUIDE.md` (craft and API), `src/lyrics.js` (text), `src/guests.js`, `src/props.js`,
-  `src/emotions_extra.js`, `templates/project/` (storyboard and brief templates), `casts/README.md` (cast pack format),
-  `projects/example/` (a nine-second film that uses all of it).
+  `src/emotions_extra.js`, `src/pixel/` (the pixel engine), `templates/project/` and `templates/project-pixel/`,
+  `casts/README.md` (cast pack format), `projects/example/` and `projects/example-pixel/` (short films that use it all),
+  `scripts/make_tap.mjs` (a page for timing every sung character by ear).

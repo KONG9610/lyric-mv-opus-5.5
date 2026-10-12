@@ -16,6 +16,17 @@
 歌曲以及片中的两个乐队角色（Cu夏 和 YuH）属于 ChiliChill 乐团；这里仅作为演示并注明出处，它们**不**包含在本仓库中：
 没有音频、没有歌词文件，也没有任何乐队角色的代码。详见 [`demo/README.md`](demo/README.md)。
 
+### 第二种画风，第二支片子
+
+[`demo/act.mp4`](demo/) 是 **ChiliChill乐团 / 三无Marblue《演》**（3 分 30 秒），用的是工具包的另一种画风：像素游戏画面，
+歌词打在对话框里，用游戏界面讲故事。它把这首歌读成一个语言模型自己的历史，从一团像素一路变清晰到 Opus 5.5。
+
+做法和第一支一样，只多了一件比画风更重要的事：**Claude 指挥了一个生图模型。** 它自己画不了图，于是由它写提示词，
+人把提示词交给生图工具，Claude 再逐张读回结果，切成几档分辨率的精灵，用代码做成动画。全片大约二十张图，
+每批只占用人几分钟，没有用到任何图生视频模型。方法写在
+[`references/image-assets.md`](skill/lyric-mv-opus-5-5/references/image-assets.md)，
+中文提示词模板在 [`image-assets.zh-CN.md`](skill/lyric-mv-opus-5-5/references/image-assets.zh-CN.md)。
+
 ## 需要什么
 
 - [Claude Code](https://claude.com/claude-code)，使用 Claude Opus 5.5
@@ -59,9 +70,10 @@ node ../../scripts/render_all.mjs --out=out/example.mp4      # 九秒的小片�
 | [`skill/lyric-mv-opus-5-5/`](skill/lyric-mv-opus-5-5/) | skill 本体：流程（[`SKILL.zh-CN.md`](skill/lyric-mv-opus-5-5/SKILL.zh-CN.md)，英文版 `SKILL.md`）和踩坑清单 |
 | [`ANIMATION_GUIDE.md`](ANIMATION_GUIDE.md) | 手艺和引擎接口（来自原仓库），外加歌词 MV 一节 |
 | [`src/`](src/) | 引擎和 Clawd，以及本项目新增的：`lyrics.js`（字幕、大字、贴图）、`guests.js`（鲸鱼、豆包、小圆球路人）、`props.js`、`emotions_extra.js` |
-| [`scripts/`](scripts/) | `new_project` 新建项目 · `analyze_audio` 测速度和强拍 · `font_sheet` 字体对比图 · `cutout` 抠出你自己写的字 · `render_all` 并行渲染 · `rerender` 只重渲变化的部分 |
-| [`templates/project/`](templates/project/) | 新片子的起点：分镜、交接文档、场景骨架 |
-| [`projects/example/`](projects/example/) | 一支用到了以上全部的九秒小片 |
+| [`src/pixel/`](src/pixel/) | 像素画风：`px.js`（精灵、像素字、面板、歌词对话框）、`pclawd.js`（任意分辨率的 Clawd 和图标）、`pguests.js` |
+| [`scripts/`](scripts/) | `new_project` 新建项目（`--style=pixel`）· `analyze_audio` 测速度和强拍 · `font_sheet` 字体对比图 · `cutout` 抠出你自己写的字 · `pixelize` 把生成的图切成多档分辨率的精灵和背景 · `make_tap` 用耳朵给每个字打点 · `render_all` 并行渲染 · `rerender` 只重渲变化的部分 |
+| [`templates/`](templates/) | 两种画风各自的起点：分镜、交接文档、场景骨架 |
+| [`projects/example/`](projects/example/)、[`projects/example-pixel/`](projects/example-pixel/) | 一支九秒的手绘小片和一支八秒的像素小片 |
 | [`casts/`](casts/) | 放私有角色包的地方（git 忽略） |
 | [`assets/fonts/`](assets/fonts/) | 带中文和拉丁字符的开源字体 |
 

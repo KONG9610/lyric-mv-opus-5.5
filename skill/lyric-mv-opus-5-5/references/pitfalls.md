@@ -110,7 +110,23 @@ Each of these happened while making a full-length lyric video with this kit. Mos
   crediting is not permission. Do not lecture; do not pretend the question is not there.
 - **Never render the full film without a yes** (unless they turned that gate off).
 
-## 8. The machine (Windows notes)
+## 8. Generated art (see image-assets.md)
+
+- **Generate nothing without a standard picture attached.** The generator remembers nothing; the reference is the
+  character.
+- **Two characters, two artists.** Characters generated in separate requests drifted apart in build and line. Regenerate
+  one "drawn like A, but it is B", then fix their relative size with one line-up image, and attach that from then on.
+- **Six cells in one image, not six images.** A sheet's cells match closely enough to swap as animation frames.
+- **A reference sheet can be wrong.** The band's own three-view had shoes the character does not wear. Ask what is
+  canon before generating from any sheet.
+- **Small palettes eat accents.** At 8 colours a yellow horn turned to skin. Use 24 or more.
+- **One pixel size on screen.** Art cut at one resolution beside code-drawn blocks at another reads as pasted in. Cut
+  backdrops and figures to match, or make the mismatch part of the idea.
+- **A crouch is shorter than a stand.** Scaling every pose to the same height makes the character grow when it bows:
+  `pixelize.mjs --ref`.
+- **Generated art of someone else's character is still theirs.** It goes in a cast pack, and so do its sprites.
+
+## 9. The machine (Windows notes)
 
 - Chrome may not be installed; Edge is, and works. The kit finds either.
 - PowerShell 5.1: `&&` does not exist; .NET file calls ignore the shell's current folder, so give absolute paths.
